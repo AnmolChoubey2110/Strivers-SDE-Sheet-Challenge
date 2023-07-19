@@ -1,0 +1,116 @@
+// Search a 2D Matrix
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+       int row=matrix.size();
+       int col=matrix[0].size();
+       int start =0;
+       int end = row*col-1;
+       int mid=start+(end-start)/2;
+
+       while(start<=end){
+           int value=matrix[mid/col][mid%col];
+
+           if(value==target){
+               return 1;
+           }
+           if(value <target){
+               start=mid+1;
+           }
+           else{
+               end=mid-1;
+           }
+           mid=start+(end-start)/2;;
+       }
+       return 0;
+
+    }
+};
+
+//Pow(x, n)
+class Solution {
+public:
+    double myPow(double x, int n) {
+       long long val=n;
+       double ans=1;
+       if(val<0) {
+           val=-1*val;
+       }
+       while(val){
+           if(val%2!=0){
+               ans=ans*x;
+               val=val-1;
+
+           }
+           else{
+               x=x*x;
+               val=val/2;
+           }
+       }
+       if(n<0) ans=(double)(1.0) / (double)(ans);
+       return ans ;
+    }
+};
+
+// Majority Element
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        unordered_map<int,int> vals ;
+        for(int i=0 ; i<nums.size();i++){
+            vals[nums[i]]++;
+        }
+        for(auto iterator : vals){
+            if(iterator.second>nums.size()/2){
+                return iterator.first;
+            }
+        }
+        return -1;
+    }
+};
+
+//Majority Element II
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        unordered_map<int,int> vals ; 
+        int n=nums.size();
+         vector<int> ls; 
+        int mini = int(n / 3) + 1;
+        for(int i=0 ; i<n;i++){
+            vals[nums[i]]++;
+
+             if (vals[nums[i]] == mini) {
+            ls.push_back(nums[i]);
+        }
+       // if (ls.size() == 2) break;
+    }
+
+    return ls;
+
+      
+    }
+};
+
+// Unique Paths
+class Solution {
+public:
+    int countPaths(int i,int j,int n,int m,vector<vector<int>> &dp)
+    {
+        if(i==(n-1)&&j==(m-1)) return 1;
+        if(i>=n||j>=m) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+     else return dp[i][j]=countPaths(i+1,j,n,m,dp)+countPaths(i,j+1,n,m,dp);
+        
+    }
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> dp(m+1,vector<int>(n+1,-1));
+       
+        //dp[1][1]=1;
+       int num=countPaths(0,0,m,n,dp);
+        if(m==1&&n==1)
+            return num;
+        return dp[0][0];
+    }
+};
